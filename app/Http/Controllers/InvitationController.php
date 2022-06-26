@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use \Illuminate\Http\JsonResponse;
 use App\Services\InvitationService;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Invitation;
 
 class InvitationController extends Controller
 {
@@ -50,7 +51,8 @@ class InvitationController extends Controller
             if ($validator->fails()) {
                 return response()->json(['status'=>'error', 'message'=>$validator->messages()], 400);
             }
-            $invitationService->cancel($request);
+            $invitation = Invitation::find($request->id);
+            $invitationService->cancel($request, $invitation);
         } catch (\Exception $e) {
             return response()->json(['status'=>'error', 'message'=>[$e->getMessage()]], 500);
         }
@@ -74,7 +76,8 @@ class InvitationController extends Controller
             if ($validator->fails()) {
                 return response()->json(['status'=>'error', 'message'=>$validator->messages()], 400);
             }
-            $invitationService->accept($request);
+            $invitation = Invitation::find($request->id);
+            $invitationService->accept($request, $invitation);
         } catch (\Exception $e) {
             return response()->json(['status'=>'error', 'message'=>[$e->getMessage()]], 500);
         }
@@ -98,7 +101,8 @@ class InvitationController extends Controller
             if ($validator->fails()) {
                 return response()->json(['status'=>'error', 'message'=>$validator->messages()], 400);
             }
-            $invitationService->decline($request);
+            $invitation = Invitation::find($request->id);
+            $invitationService->decline($request, $invitation);
         } catch (\Exception $e) {
             return response()->json(['status'=>'error', 'message'=>[$e->getMessage()]], 500);
         }
