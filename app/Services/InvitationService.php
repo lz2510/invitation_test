@@ -93,59 +93,80 @@ class InvitationService
 
     /**
      * @param Request $request
+     * @param Invitation $invitation
      * @return void
+     * @throws \Exception
      */
-    public function cancel(Request $request): void
+    public function cancel(Request $request, Invitation $invitation): void
     {
-        $invitation = Invitation::find($request->id);
         if (empty($invitation)) {
-            throw new \Exception("invitaion {$request->id} doesn't exist.");
+            throw new \Exception("invitaion doesn't exist.");
         }
         if ($invitation->user_id != $request->user_id) {
             throw new \Exception("invitaion user doesn't match.");
         }
-        $invitation->status = 'cancelled';
+        if ($invitation->status == 'accepted' or $invitation->status == 'declined') {
+            throw new \Exception("invitaion already accepted or declined, can't cancel");
+        }
 
+        $this->save($invitation, 'cancelled');
+    }
+
+    /**
+     * save status
+     * @param Invitation $invitation
+     * @param $status
+     * @return void
+     */
+    public function save(Invitation $invitation, $status)
+    {
+        $invitation->status = $status;
         $invitation->save();
+
+        $this->updateStatus($invitation);
     }
 
     /**
      * accept an invitation
      * @param Request $request
+     * @param Invitation $invitation
      * @return void
      * @throws \Exception
      */
-    public function accept(Request $request): void
+    public function accept(Request $request, Invitation $invitation): void
     {
-        $invitation = Invitation::find($request->id);
         if (empty($invitation)) {
             throw new \Exception("invitaion {$request->id} doesn't exist.");
+        }
+        if ($invitation->status == 'cancelled') {
+            throw new \Exception("invitaion already cancelled, can't accept");
         }
         if ($invitation->invitation_code != $request->invitation_code) {
             throw new \Exception("invitaion code doesn't match.");
         }
-        $invitation->status = 'accepted';
 
-        $invitation->save();
+        $this->save($invitation, 'accepted');
     }
 
     /**
      * decline an invitation
      * @param Request $request
+     * @param Invitation $invitation
      * @return void
      * @throws \Exception
      */
-    public function decline(Request $request): void
+    public function decline(Request $request, Invitation $invitation): void
     {
-        $invitation = Invitation::find($request->id);
         if (empty($invitation)) {
             throw new \Exception("invitaion {$request->id} doesn't exist.");
+        }
+        if ($invitation->status == 'cancelled') {
+            throw new \Exception("invitaion already cancelled, can't decline");
         }
         if ($invitation->invitation_code != $request->invitation_code) {
             throw new \Exception("invitaion code doesn't match.");
         }
-        $invitation->status = 'declined';
 
-        $invitation->save();
+        $this->save($invitation, 'declined');
     }
 }
