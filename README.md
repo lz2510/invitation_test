@@ -18,13 +18,13 @@
 
     http://localhost/api/invitations/:id/accept
 
-    curl -d '{"id":1, "invitation_code":""}' -H 'Content-Type: application/json' -X POST http://localhost/api/invitations/:id/accept
+    curl -d '{"id":1, "invitation_code":"62b7ed7aa6224"}' -H 'Content-Type: application/json' -X POST http://localhost/api/invitations/:id/accept
 
 ### decline an invitation
 
     http://localhost/api/invitations/:id/decline
 
-    curl -d '{"id":1, "invitation_code":""}' -H 'Content-Type: application/json' -X POST http://localhost/api/invitations/:id/decline
+    curl -d '{"id":1, "invitation_code":"62b7ed7aa6224"}' -H 'Content-Type: application/json' -X POST http://localhost/api/invitations/:id/decline
 
 ## how to use
 
