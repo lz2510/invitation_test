@@ -22,7 +22,7 @@ class InvitationControllerTest extends TestCase
         $data = ["user_id"=>1,"email"=>"user@sample.com"];
         $response = $this->post('api/invitations/send', $data);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
     }
 
     /**
@@ -49,9 +49,9 @@ class InvitationControllerTest extends TestCase
         $this->seed(InvitationSeeder::class);
         $row = Invitation::where("id", 1)->first();
         $data = ["id"=>$row->id, "user_id"=>$row->user_id];
-        $response = $this->post('api/invitations/:id/cancel', $data);
+        $response = $this->put('api/invitations/:id/cancel', $data);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
     }
 
     /**
@@ -63,11 +63,11 @@ class InvitationControllerTest extends TestCase
         $this->seed(InvitationSeeder::class);
         $row = Invitation::where("id", 1)->first();
         $data = ["id"=>$row->id];
-        $response = $this->post('api/invitations/:id/cancel', $data);
+        $response = $this->put('api/invitations/:id/cancel', $data);
         $response->assertStatus(400);
 
         $data = ["user_id"=>$row->user_id];
-        $response = $this->post('api/invitations/:id/cancel', $data);
+        $response = $this->put('api/invitations/:id/cancel', $data);
         $response->assertStatus(400);
     }
 
@@ -80,7 +80,7 @@ class InvitationControllerTest extends TestCase
         $this->seed(InvitationSeeder::class);
         $row = Invitation::where("id", 1)->first();
         $data = ["id"=>99999, "user_id"=>$row->user_id];
-        $response = $this->post('api/invitations/:id/cancel', $data);
+        $response = $this->put('api/invitations/:id/cancel', $data);
 
         $response->assertStatus(500);
     }
@@ -94,7 +94,7 @@ class InvitationControllerTest extends TestCase
         $this->seed(InvitationSeeder::class);
         $row = Invitation::where("id", 1)->first();
         $data = ["id"=>$row->user_id, "user_id"=>99999];
-        $response = $this->post('api/invitations/:id/cancel', $data);
+        $response = $this->put('api/invitations/:id/cancel', $data);
 
         $response->assertStatus(500);
     }
@@ -109,9 +109,9 @@ class InvitationControllerTest extends TestCase
         $row = Invitation::where("id", 1)->first();
 
         $data = ["id"=>$row->id, "invitation_code"=>$row->invitation_code];
-        $response = $this->post('api/invitations/:id/accept', $data);
+        $response = $this->put('api/invitations/:id/accept', $data);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
     }
 
     /**
@@ -123,11 +123,11 @@ class InvitationControllerTest extends TestCase
         $this->seed(InvitationSeeder::class);
         $row = Invitation::where("id", 1)->first();
         $data = ["id"=>$row->id];
-        $response = $this->post('api/invitations/:id/accept', $data);
+        $response = $this->put('api/invitations/:id/accept', $data);
         $response->assertStatus(400);
 
         $data = ["invitation_code"=>$row->invitation_code];
-        $response = $this->post('api/invitations/:id/accept', $data);
+        $response = $this->put('api/invitations/:id/accept', $data);
         $response->assertStatus(400);
     }
 
@@ -140,7 +140,7 @@ class InvitationControllerTest extends TestCase
         $this->seed(InvitationSeeder::class);
         $row = Invitation::where("id", 1)->first();
         $data = ["id"=>$row->id, "invitation_code"=>"test_code"];
-        $response = $this->post('api/invitations/:id/accept', $data);
+        $response = $this->put('api/invitations/:id/accept', $data);
 
         $response->assertStatus(500);
     }
@@ -156,9 +156,9 @@ class InvitationControllerTest extends TestCase
         $row = Invitation::where("id", 1)->first();
 
         $data = ["id"=>$row->id, "invitation_code"=>$row->invitation_code];
-        $response = $this->post('api/invitations/:id/decline', $data);
+        $response = $this->put('api/invitations/:id/decline', $data);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
     }
 
     /**
@@ -170,11 +170,11 @@ class InvitationControllerTest extends TestCase
         $this->seed(InvitationSeeder::class);
         $row = Invitation::where("id", 1)->first();
         $data = ["id"=>$row->id];
-        $response = $this->post('api/invitations/:id/decline', $data);
+        $response = $this->put('api/invitations/:id/decline', $data);
         $response->assertStatus(400);
 
         $data = ["invitation_code"=>$row->invitation_code];
-        $response = $this->post('api/invitations/:id/decline', $data);
+        $response = $this->put('api/invitations/:id/decline', $data);
         $response->assertStatus(400);
     }
 
@@ -187,7 +187,7 @@ class InvitationControllerTest extends TestCase
         $this->seed(InvitationSeeder::class);
         $row = Invitation::where("id", 1)->first();
         $data = ["id"=>$row->id, "invitation_code"=>"test_code"];
-        $response = $this->post('api/invitations/:id/decline', $data);
+        $response = $this->put('api/invitations/:id/decline', $data);
 
         $response->assertStatus(500);
     }
