@@ -19,6 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/invitations/send', [App\Http\Controllers\InvitationController::class,'send']);
-Route::post('/invitations/:id/cancel', [App\Http\Controllers\InvitationController::class,'cancel']);
-Route::post('/invitations/:id/accept', [App\Http\Controllers\InvitationController::class,'accept']);
-Route::post('/invitations/:id/decline', [App\Http\Controllers\InvitationController::class,'decline']);
+Route::put('/invitations/:id/cancel', [App\Http\Controllers\InvitationController::class,'cancel']);
+Route::put('/invitations/:id/accept', [App\Http\Controllers\InvitationController::class,'accept']);
+Route::put('/invitations/:id/decline', [App\Http\Controllers\InvitationController::class,'decline']);
