@@ -4,27 +4,27 @@
 
 ### send an invitation
 
-    http://localhost/api/invitations/send
+    POST http://localhost/api/invitations/send
 
     curl -d '{"user_id":1,"email":"user@sample.com"}' -H 'Content-Type: application/json' -X POST http://localhost/api/invitations/send
 
 ### cancel an invitation
 
-    http://localhost/api/invitations/:id/cancel
+    PUT http://localhost/api/invitations/:id/cancel
 
-    curl -d '{"id":1, "user_id":1}' -H 'Content-Type: application/json' -X POST http://localhost/api/invitations/:id/cancel
+    curl -d '{"id":1, "user_id":1}' -H 'Content-Type: application/json' -X PUT http://localhost/api/invitations/:id/cancel
 
 ### accept an invitation
 
-    http://localhost/api/invitations/:id/accept
+    PUT http://localhost/api/invitations/:id/accept
 
-    curl -d '{"id":1, "invitation_code":"62b7ed7aa6224"}' -H 'Content-Type: application/json' -X POST http://localhost/api/invitations/:id/accept
+    curl -d '{"id":1, "invitation_code":"62b7ed7aa6224"}' -H 'Content-Type: application/json' -X PUT http://localhost/api/invitations/:id/accept
 
 ### decline an invitation
 
-    http://localhost/api/invitations/:id/decline
+    PUT http://localhost/api/invitations/:id/decline
 
-    curl -d '{"id":1, "invitation_code":"62b7ed7aa6224"}' -H 'Content-Type: application/json' -X POST http://localhost/api/invitations/:id/decline
+    curl -d '{"id":1, "invitation_code":"62b7ed7aa6224"}' -H 'Content-Type: application/json' -X PUT http://localhost/api/invitations/:id/decline
 
 ## how to use
 
